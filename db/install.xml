@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/taskdisplay/db" VERSION="20210407" COMMENT="Database to test the functionality."
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="block_taskdisplay" COMMENT="Database to test the functionality.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="course_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="To be used as n"/>
+        <FIELD NAME="user" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="To be used as notification's mess"/>
+        <FIELD NAME="result" TYPE="int" LENGTH="10" COMMENT="To " NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
