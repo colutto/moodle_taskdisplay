@@ -23,6 +23,9 @@
  */
 namespace block_taskdisplay\output;
 
+use block_taskdisplay\observer as observer;
+use core\session\exception;
+
 defined('MOODLE_INTERNAL') || die;
 class renderer extends \plugin_renderer_base{
 
@@ -39,14 +42,15 @@ class renderer extends \plugin_renderer_base{
         $this->page->requires->css_theme($url_x3dom_css);
 
 
-//        gets the data for the user assignment results
+//      gets the data for the user assignment results
         $user_data = $DB->get_records('block_taskdisplay', array('id' => 1));
-        $this->page->requires->js_call_amd('block_taskdisplay/server_events', 'connect');
 
+        // loads the JavaScript code for the client server-sent messaging system
+//        $this->page->requires->js_call_amd('block_taskdisplay/server_events', 'connect');
 
-        $this->page->requires->js_call_amd('block_taskdisplay/main', 'initialise');
+        $data[] = 'the data for the chart';
+        $this->page->requires->js_call_amd('block_taskdisplay/main', 'initialise', $data);
 
-        $data = 'welcome';
 
         $html =     '
                      <div id="chartholder"></div>
@@ -57,15 +61,7 @@ class renderer extends \plugin_renderer_base{
                             <a id="multi_series_bar_chart">Multi Series Bar Chart</a>
                             <a id="vertical_bar_chart">Vertical Bar Chart</a>
                         </div>
-                     </div>
-                     <div id="result">'.$data.'</div>';
-
-
-
-
-
-
-
+                     </div>';
 
 
 

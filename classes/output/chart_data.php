@@ -21,11 +21,11 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author      Stefan Colutto
  */
+namespace block_taskdisplay\output;
 defined('MOODLE_INTERNAL') || die();
 
-$observers = array(
-    array(
-        'eventname' => '\mod_assign\event\assessable_submitted',
-        'callback' => '\block_taskdisplay\observer::course_graded',
-    ),
-);
+class chart_data{
+    public static function getData(array $courses){
+
+}
+}

@@ -4,12 +4,11 @@
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="block_taskdisplay" COMMENT="Database to test the functionality.">
+    <TABLE NAME="block_taskdisplay" COMMENT="Saves occuring events when user gets graded.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="course_name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="To be used as n"/>
-        <FIELD NAME="user" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="To be used as notification's mess"/>
-        <FIELD NAME="result" TYPE="int" LENGTH="10" COMMENT="To " NOTNULL="false"/>
+        <FIELD NAME="user_id" TYPE="int" LENGTH="10" COMMENT="The user id" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="course_id" TYPE="int" LENGTH="10" COMMENT="The course id" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

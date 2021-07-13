@@ -3,11 +3,11 @@ import * as d3x3d from './d3-x3d_library/d3-x3d';
 import 'block_taskdisplay/x3dom';
 import * as supportFunct from './supportFunctions';
 
-export function initialise() {
+export function initialise(data) {
     var chartholder = d3.select('#chartholder');
     var myData = [
         {
-            key: "UK",
+            key: data,
             values: [
                 {key: "Apples", value: 9},
                 {key: "Oranges", value: 3},

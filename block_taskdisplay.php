@@ -46,27 +46,6 @@ class block_taskdisplay extends block_base {
 
 
 
-//        $user_data = $DB->get_records('block_taskdisplay', array('id' => 1));
-//
-//        $jsmodule = array(
-//            'name' => 'block_taskdisplay',
-//            'fullpath' => '/blocks/taskdisplay/script.js',
-//            'requires' => array(),
-//        );
-//
-//
-//
-//        $this->page->requires->js_init_call('M.block_taskdisplay.showChart',$user_data, false, $jsmodule);
-
-
-//        $data = new stdClass();
-//        $data->course_name = 'english';
-//        $data->user = 'test_user';
-//        $data->result = 8;
-//
-//        $DB->insert_record('block_taskdisplay', $data);
-
-
         return $this->content;
     }
 
