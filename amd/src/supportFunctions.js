@@ -21,8 +21,10 @@ function renewDiv(divName){
  * @param chartType The type of the new chart.
  * @param data The data for the new chart.
  */
-export function changeChart(divName, chartType, data){
+export function changeChart(divName, chartType, data, changeChart=false){
+    if (changeChart){
     renewDiv(divName);
+    }
     var chartholder = d3.select('#' + divName);
     switch (chartType){
         case 'areaChartMultiSeries':
@@ -53,6 +55,9 @@ export function changeChart(divName, chartType, data){
     var myChart = d3x3d.chart.barChartVertical();
     chartholder.datum(data).call(myChart);
     window.x3dom.reload();
+}
+export function initialiseChart(data){
+    changeChart('charholder', 'areaChartMultiSeries', data);
 }
 
 

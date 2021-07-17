@@ -23,8 +23,7 @@
  */
 namespace block_taskdisplay\output;
 
-use block_taskdisplay\observer as observer;
-use core\session\exception;
+use block_taskdisplay\external;
 
 defined('MOODLE_INTERNAL') || die;
 class renderer extends \plugin_renderer_base{
@@ -47,9 +46,9 @@ class renderer extends \plugin_renderer_base{
 
         // loads the JavaScript code for the client server-sent messaging system
 //        $this->page->requires->js_call_amd('block_taskdisplay/server_events', 'connect');
+        $chart_data = new chart_data($this->page);
+        $chart_data->initialiseChart();
 
-        $data[] = 'the data for the chart';
-        $this->page->requires->js_call_amd('block_taskdisplay/main', 'initialise', $data);
 
 
         $html =     '
@@ -61,7 +60,7 @@ class renderer extends \plugin_renderer_base{
                             <a id="multi_series_bar_chart">Multi Series Bar Chart</a>
                             <a id="vertical_bar_chart">Vertical Bar Chart</a>
                         </div>
-                     </div>';
+                     </div><div></div>';
 
 
 
