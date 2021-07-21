@@ -45,13 +45,13 @@ class chart_data{
         global $USER;
         global $DB;
         $user_courses = enrol_get_my_courses();
-        $data = array();
+        $data['courses'] = array();
         foreach ($user_courses as $course){
             /*creating the $data nested array to pass it to the JavaScript function for defining the charts.
             in the first foreach loop we are going through all of the users courses*/
             $course_id = $course->id;
             $course_name = $course->fullname;
-            $data[$course_name] = array();
+            $data['courses'][$course_name] = array();
             $course_condition['course'] = $course_id;
             $assignments = $DB->get_records('assign', $course_condition);
             $number_assignemnts = 0;
@@ -63,17 +63,23 @@ class chart_data{
                 $number_assignemnts +=1;
                 $assignment_name = $assignment->name;
                 $assignment_id = $assignment->id;
-                $data[$course_name][$assignment_name] = array();
                 $assignment_condition = array('userid'=>$USER->id, 'assignment'=>$assignment_id);
                 $assignment_submission = $DB->get_record('assign_submission', $assignment_condition);
-                $data[$course_name][$assignment_name] = array('status'=>$assignment_submission->status);
+                $data['courses'][$course_name][$assignment_name] = $assignment_submission->status;
                 if ($assignment_submission->status=='submitted'){
                     $submitted_assignments +=1;
                 }
             }
-            $data[$course_name]['number_of_assignments'] = $number_assignemnts;
-            $data[$course_name]['submitted_assignments'] = $submitted_assignments;
+            $data['courses'][$course_name]['number_of_assignments'] = $number_assignemnts;
+            $data['courses'][$course_name]['submitted_assignments'] = $submitted_assignments;
         }
+    
+        // $test['testcourse'] = array();
+        // $test['testcourse']['Test course'] = array('assignment1'=>'write assignment1', 'assignment2'=>'write assignment2');
+        // // $test['testcourse']['Test course']['assignment1'] = 'write assignment 1';
+        // $test['testcourse']['Test course']['assignment2'] = 'write assignment 2';
+        // $test['testcourse']['Second test course'] = array('assignment1'=>'write assignment1', 'assignment2'=>'write assignment2');        
+         
 
         $this->page->requires->js_call_amd('block_taskdisplay/main', 'initialise', $data);
 

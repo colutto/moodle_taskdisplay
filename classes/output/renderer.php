@@ -50,7 +50,6 @@ class renderer extends \plugin_renderer_base{
         $chart_data->initialiseChart();
 
 
-
         $html =     '
                      <div id="chartholder"></div>
                      <div class="dropdown">

@@ -4,6 +4,13 @@ import 'block_taskdisplay/x3dom';
 import * as supportFunct from './supportFunctions';
 
 export function initialise(data) {
+    var keys = Object.keys(data);
+    for (var i=0; i<keys.length; i++){
+        alert(keys[i]);
+        for (var object in data[keys[i]]){
+            alert(object+' '+data[keys[i]][object]);
+        }
+    }
     var chartholder = d3.select('#chartholder');
     var myData = [
         {
