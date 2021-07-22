@@ -70,8 +70,8 @@ class chart_data{
                     $submitted_assignments +=1;
                 }
             }
-            $data['courses'][$course_name]['number_of_assignments'] = $number_assignemnts;
-            $data['courses'][$course_name]['submitted_assignments'] = $submitted_assignments;
+            // $data['courses'][$course_name]['number_of_assignments'] = $number_assignemnts;
+            // $data['courses'][$course_name]['submitted_assignments'] = $submitted_assignments;
         }
     
         // $test['testcourse'] = array();
