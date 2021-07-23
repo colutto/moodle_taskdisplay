@@ -1,17 +1,30 @@
+/**
+ * The main Javascript page for the Task Display plugin.
+ *
+ * @package block_taskdisplay
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author Stefan Colutto
+ */
 import * as d3 from './d3-x3d_library/d3';
 import * as d3x3d from './d3-x3d_library/d3-x3d';
 import 'block_taskdisplay/x3dom';
 import * as supportFunct from './supportFunctions';
-
+/**
+ *
+ * @param {*} data Stores all the courses the user is enrolled in and the
+ * to the courses related assignments.
+ */
 export function initialise(data) {
     var chartholder = d3.select('#chartholder');
     var my_data = [];
     var keys = Object.keys(data);
     for (var i=0; i<keys.length; i++){
+        // loops through all the user enrolled courses.
         // alert(keys[i]);
         var values = [];
         var index = 1;
         for (var object in data[keys[i]]){
+            // loops through all the course related assignments.
             // alert(object+' '+data[keys[i]][object]);
             if (data[keys[i]][object]=='submitted'){
                 values.push({key: 'EA'+index, value: 100});
@@ -22,7 +35,6 @@ export function initialise(data) {
         }
         my_data.unshift({key: keys[i], values: values});
     }
-
     var mychart = d3x3d.chart.barChartMultiSeries();
     chartholder.datum(my_data).call(mychart);
     var newData = [

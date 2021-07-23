@@ -46,6 +46,7 @@ class renderer extends \plugin_renderer_base{
 
         // loads the JavaScript code for the client server-sent messaging system
 //        $this->page->requires->js_call_amd('block_taskdisplay/server_events', 'connect');
+        $this->page->requires->js_call_amd('block_taskdisplay/runtime_node', 'initialise_runtimNode');
         $chart_data = new chart_data($this->page);
         $chart_data->initialiseChart();
 
@@ -59,7 +60,8 @@ class renderer extends \plugin_renderer_base{
                             <a id="multi_series_bar_chart">Multi Series Bar Chart</a>
                             <a id="vertical_bar_chart">Vertical Bar Chart</a>
                         </div>
-                     </div><div></div>';
+                     </div>
+                     <button id="asynchronousRequest">Runtime Node</button>';
 
 
 
