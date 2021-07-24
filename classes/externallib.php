@@ -1,5 +1,6 @@
 <?php
-namespace block_taskdisplay;
+// namespace block_taskdisplay;
+// defined('MOODLE_INTERNAL') || die();
 
 use external_function_parameters;
 use external_api;
@@ -7,7 +8,7 @@ use external_multiple_structure;
 use external_single_structure;
 use external_value;
 
-// require_once("$CFG->libdir/externallib.php");
+require_once("$CFG->libdir/externallib.php");
 
 class block_taskdisplay_external extends external_api {
 
@@ -20,16 +21,13 @@ class block_taskdisplay_external extends external_api {
     }
 
     public static function loaddata_returns(){
-        return new external_multiple_structure(
-            new external_single_structure(
-                array(
-                    'course' => new external_value(PARAM_TEXT, 'name of the course'),
-                )
-            )
-        );
+        return new external_value(PARAM_TEXT);
     }
 
     public static function loaddata(){
-        return 'new course to return';
+        // $obj = new stdClass;
+        // $obj->course = 'new response text';
+        // return $obj;
+        return 'new response text';
     }
 }
