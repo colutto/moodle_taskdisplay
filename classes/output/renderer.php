@@ -28,7 +28,7 @@ use block_taskdisplay\external;
 defined('MOODLE_INTERNAL') || die;
 class renderer extends \plugin_renderer_base{
 
-    public function render_taskdisplay(){
+public function render_taskdisplay(){
         global $CFG; //Configuration Variable
         global $DB; //Database Variable
 
@@ -52,16 +52,16 @@ class renderer extends \plugin_renderer_base{
 
 
         $html =     '
-                     <div id="chartholder"></div>
-                     <div class="dropdown">
+                <div id="chartholder"></div>
+                <div class="dropdown">
                         <button class="dropbtn" id="buttonChangeChart">Area Chart</button>
                         <div class="dropdown-content">
-                            <a id="area_chart">Area Chart</a>
-                            <a id="multi_series_bar_chart">Multi Series Bar Chart</a>
-                            <a id="vertical_bar_chart">Vertical Bar Chart</a>
+                        <a id="area_chart">Area Chart</a>
+                        <a id="multi_series_bar_chart">Multi Series Bar Chart</a>
+                        <a id="vertical_bar_chart">Vertical Bar Chart</a>
                         </div>
-                     </div>
-                     <button id="asynchronousRequest">Runtime Node</button>';
+                </div>
+                <button id="asynchronousRequest">Runtime Node</button>';
 
 
 
@@ -69,6 +69,6 @@ class renderer extends \plugin_renderer_base{
 
         return $html;
 
-    }
+}
 
 }
