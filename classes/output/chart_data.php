@@ -76,10 +76,10 @@ class chart_data{
     
         // $test['testcourse'] = array();
         // $test['testcourse']['Test course'] = array('assignment1'=>'write assignment1', 'assignment2'=>'write assignment2');
-        //  $test['testcourse']['Test course']['assignment1'] = 'write assignment 1';
+        // // $test['testcourse']['Test course']['assignment1'] = 'write assignment 1';
         // $test['testcourse']['Test course']['assignment2'] = 'write assignment 2';
         // $test['testcourse']['Second test course'] = array('assignment1'=>'write assignment1', 'assignment2'=>'write assignment2');        
-        
+         
 
         $this->page->requires->js_call_amd('block_taskdisplay/main', 'initialise', $data);
 

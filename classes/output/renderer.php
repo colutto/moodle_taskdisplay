@@ -28,7 +28,7 @@ use block_taskdisplay\external;
 defined('MOODLE_INTERNAL') || die;
 class renderer extends \plugin_renderer_base{
 
-public function render_taskdisplay(){
+    public function render_taskdisplay(){
         global $CFG; //Configuration Variable
         global $DB; //Database Variable
 
@@ -45,23 +45,23 @@ public function render_taskdisplay(){
         $user_data = $DB->get_records('block_taskdisplay', array('id' => 1));
 
         // loads the JavaScript code for the client server-sent messaging system
-//        $this->page->requires->js_call_amd('block_taskdisplay/server_events', 'connect');
-        $this->page->requires->js_call_amd('block_taskdisplay/runtime_node', 'initialise_runtimNode');
+       $this->page->requires->js_call_amd('block_taskdisplay/server_events', 'connect');
+        // $this->page->requires->js_call_amd('block_taskdisplay/runtime_node', 'initialise_runtimNode');
         $chart_data = new chart_data($this->page);
         $chart_data->initialiseChart();
 
 
         $html =     '
-                <div id="chartholder"></div>
-                <div class="dropdown">
+                     <div id="chartholder"></div>
+                     <div class="dropdown">
                         <button class="dropbtn" id="buttonChangeChart">Area Chart</button>
                         <div class="dropdown-content">
-                        <a id="area_chart">Area Chart</a>
-                        <a id="multi_series_bar_chart">Multi Series Bar Chart</a>
-                        <a id="vertical_bar_chart">Vertical Bar Chart</a>
+                            <a id="area_chart">Area Chart</a>
+                            <a id="multi_series_bar_chart">Multi Series Bar Chart</a>
+                            <a id="vertical_bar_chart">Vertical Bar Chart</a>
                         </div>
-                </div>
-                <button id="asynchronousRequest">Runtime Node</button>';
+                     </div>
+                     <div id="test"></div>';
 
 
 
@@ -69,6 +69,6 @@ public function render_taskdisplay(){
 
         return $html;
 
-}
+    }
 
 }

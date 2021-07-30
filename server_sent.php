@@ -35,11 +35,19 @@ global $USER;
 global $DB;
 while(true){
     $conditions = array();
-    $conditions->user_id = [$USER->id];
+    $conditions['user_id'] = [$USER->id];
     $occurences = $DB->count_records('block_taskdisplay', $conditions);
     if($occurences != 0){
-        echo "data: event occured\n\n";
+        echo 'event: update';
         $DB->delete_records('block_taskdisplay', $conditions);
     }
+    // while (ob_get_level()>0){
+    //     ob_end_flush();     
+    // }
+    // flush();
+    // if (connection_aborted()) {
+    //         break;
+    // }
+    // sleep(1);
 }
 

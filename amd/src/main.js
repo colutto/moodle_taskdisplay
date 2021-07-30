@@ -20,7 +20,7 @@ export function initialise(data) {
     var keys = Object.keys(data);
     for (var i=0; i<keys.length; i++){
         // loops through all the user enrolled courses.
-        alert(keys[i]);
+        // alert(keys[i]);
         var values = [];
         var index = 1;
         for (var object in data[keys[i]]){
