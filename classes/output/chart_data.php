@@ -42,6 +42,11 @@ class chart_data{
         $this->page = $page;
 }
     public function initialiseChart(){
+        $data = self::getChartData();
+        $this->page->requires->js_call_amd('block_taskdisplay/main', 'initialise', $data);
+        $this->page->requires->js_call_amd('block_taskdisplay/server_events', 'connect');
+    }
+    public static function getChartData(){
         global $USER;
         global $DB;
         $user_courses = enrol_get_my_courses();
@@ -60,28 +65,32 @@ class chart_data{
                 /*In the second foreach loop we are going through all the assignments of the different
                 courses from the user and getting the total number of assignments for a course and the number
                 of already submitted assignments as well as the status of each assignment*/
-                $number_assignemnts +=1;
-                $assignment_name = $assignment->name;
-                $assignment_id = $assignment->id;
-                $assignment_condition = array('userid'=>$USER->id, 'assignment'=>$assignment_id);
-                $assignment_submission = $DB->get_record('assign_submission', $assignment_condition);
-                $data['courses'][$course_name][$assignment_name] = $assignment_submission->status;
-                if ($assignment_submission->status=='submitted'){
-                    $submitted_assignments +=1;
+                $db_query_coursemodules['course'] = $course_id;
+                $db_query_coursemodules['module'] = 1;
+                $db_query_coursemodules['instance'] = $assignment->id;
+                $course_modules = $DB->get_record('course_modules', $db_query_coursemodules);
+                if($course_modules->deletioninprogress!=1){
+                    $number_assignemnts +=1;
+                    $assignment_name = $assignment->name;
+                    $assignment_id = $assignment->id;
+                    $assignment_condition = array('userid'=>$USER->id, 'assignment'=>$assignment_id);
+                    $assignment_submission = $DB->get_record('assign_submission', $assignment_condition);
+                    $data['courses'][$course_name][$assignment_name] = $assignment_submission->status;
+                    if ($assignment_submission->status=='submitted'){
+                        $submitted_assignments +=1;
+                    }
                 }
             }
-            // $data['courses'][$course_name]['number_of_assignments'] = $number_assignemnts;
-            // $data['courses'][$course_name]['submitted_assignments'] = $submitted_assignments;
-        }
-    
-        // $test['testcourse'] = array();
-        // $test['testcourse']['Test course'] = array('assignment1'=>'write assignment1', 'assignment2'=>'write assignment2');
-        // // $test['testcourse']['Test course']['assignment1'] = 'write assignment 1';
-        // $test['testcourse']['Test course']['assignment2'] = 'write assignment 2';
-        // $test['testcourse']['Second test course'] = array('assignment1'=>'write assignment1', 'assignment2'=>'write assignment2');        
-         
-
-        $this->page->requires->js_call_amd('block_taskdisplay/main', 'initialise', $data);
-
+            $data['courses'][$course_name]['number_of_assignments'] = $number_assignemnts;
+            $data['courses'][$course_name]['submitted_assignments'] = $submitted_assignments;
+            $noAssignments = false;
+            /*the noAssingment variable is passed on to the JavaScript function to 
+            define a default state for the chart. */
+            if($number_assignemnts==0){
+                $noAssignments = true;
+            }
+            $data['courses'][$course_name]['noAssignments'] = $noAssignments;
+        }    
+        return $data;  
     }
 }

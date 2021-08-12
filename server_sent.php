@@ -33,21 +33,24 @@ header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 global $USER;
 global $DB;
-while(true){
-    $conditions = array();
-    $conditions['user_id'] = [$USER->id];
-    $occurences = $DB->count_records('block_taskdisplay', $conditions);
-    if($occurences != 0){
-        echo 'event: update';
-        $DB->delete_records('block_taskdisplay', $conditions);
-    }
-    // while (ob_get_level()>0){
-    //     ob_end_flush();     
+// while(true){
+    
+    // $conditions = array();
+    // $conditions['user_id'] = [$USER->id];
+    // $occurences = $DB->count_records('block_taskdisplay', $conditions);
+    // if($occurences != 0){
+            echo "event: update\n";
+            // echo "retry: " . 10000 . " \n";
+            echo "data: erster test \n\n";
+    //     $DB->delete_records('block_taskdisplay', $conditions);
     // }
-    // flush();
+    while (ob_get_level()>0){
+        ob_end_flush();     
+    }
+    flush();
     // if (connection_aborted()) {
     //         break;
     // }
-    // sleep(1);
-}
+    sleep(7);
+// }
 

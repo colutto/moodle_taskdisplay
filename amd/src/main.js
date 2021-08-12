@@ -16,27 +16,10 @@ import * as supportFunct from './supportFunctions';
  */
 export function initialise(data) {
     var chartholder = d3.select('#chartholder');
-    var my_data = [];
-    var keys = Object.keys(data);
-    for (var i=0; i<keys.length; i++){
-        // loops through all the user enrolled courses.
-        // alert(keys[i]);
-        var values = [];
-        var index = 1;
-        for (var object in data[keys[i]]){
-            // loops through all the course related assignments.
-            // alert(object+' '+data[keys[i]][object]);
-            if (data[keys[i]][object]=='submitted'){
-                values.push({key: 'EA'+index, value: 100});
-            }else {
-                values.push({key: 'EA'+index});
-            }
-            index += 1;
-        }
-        my_data.unshift({key: keys[i], values: values});
-    }
-    var mychart = d3x3d.chart.barChartMultiSeries();
-    chartholder.datum(my_data).call(mychart);
+        var my_data = supportFunct.converJSONData(data);
+        var mychart = d3x3d.chart.barChartMultiSeries();
+        chartholder.datum(my_data).call(mychart);
+    // }
     var newData = [
         {
             key: "UK",

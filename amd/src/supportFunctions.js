@@ -21,10 +21,11 @@ function renewDiv(divName){
  * @param chartType The type of the new chart.
  * @param data The data for the new chart.
  */
-export function changeChart(divName, chartType, data, changeChart=false){
-    if (changeChart){
+export function changeChart(divName, chartType, data){
+    // if (changeChart){
+    // renewDiv(divName);
+    // }
     renewDiv(divName);
-    }
     var chartholder = d3.select('#' + divName);
     switch (chartType){
         case 'areaChartMultiSeries':
@@ -57,7 +58,44 @@ export function changeChart(divName, chartType, data, changeChart=false){
     window.x3dom.reload();
 }
 export function initialiseChart(data){
-    changeChart('charholder', 'areaChartMultiSeries', data);
+    changeChart('chartholder', 'areaChartMultiSeries', data);
 }
-
-
+export function converJSONData(data){
+    var my_data = [];
+    var keys = Object.keys(data);
+    // alert(Object.keys(data).length);
+    // if(!supportFunct.isEmpty(data)){
+        for (var i=0; i<keys.length; i++){
+            // loops through all the user enrolled courses.
+            // alert('key: '+keys[i]);
+            var values = [];
+            var index = 1;
+            if(!data[keys[i]]['noAssignments']){
+            /* if there aren't any assignments at the moment it should fill in the
+            key variable for the chart with an empty string, because the chart needs at least
+            an empty string to function accordingly*/
+                for (var object in data[keys[i]]){
+                    // loops through all the course related assignments.
+                    // alert(object+' '+data[keys[i]][object]);
+                    // if(data[keys[i]]['number_of_assignments']!=0){
+                    if(object!='number_of_assignments' && object!='submitted_assignments' && object!='noAssignments'){
+                        /**checks if the object is an assingment or just some additional information of the course */
+                        if (data[keys[i]][object]=='submitted'){
+                            values.push({key: 'EA'+index, value: 100});
+                        }else {
+                            values.push({key: 'EA'+index});
+                        }
+                        index += 1;
+                    }
+                }
+            } else {
+                // if the values array is empty it gets default parameters.
+                values.push({key: 'EA'+index});
+                //TODO try to get rid of the EA statement when there are no assingments stored for the course
+            }
+            my_data.unshift({key: keys[i], values: values});
+            /**insert the value array with the corresponding key to the mydata array
+             * which will then be given to the chart method for visualization */
+        }
+        return my_data;
+}

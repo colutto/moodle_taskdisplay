@@ -7,6 +7,7 @@ export function get_chart_data(){
         fail: notification.exception,
     }]);
     connection[0].then(function(data){
-        alert(data);
+        alert(data[0].course_name+' '+data[0].number_of_assignments+' '+data[0].submitted_assignments+' '+
+        data[0].assignments[0].assignment_name+' '+data[0].assignments[0].is_submitted);
     });
 }

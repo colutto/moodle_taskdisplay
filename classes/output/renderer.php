@@ -45,8 +45,6 @@ class renderer extends \plugin_renderer_base{
         $user_data = $DB->get_records('block_taskdisplay', array('id' => 1));
 
         // loads the JavaScript code for the client server-sent messaging system
-       $this->page->requires->js_call_amd('block_taskdisplay/server_events', 'connect');
-        // $this->page->requires->js_call_amd('block_taskdisplay/runtime_node', 'initialise_runtimNode');
         $chart_data = new chart_data($this->page);
         $chart_data->initialiseChart();
 
