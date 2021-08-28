@@ -54,6 +54,7 @@ class block_taskdisplay_external extends external_api {
                     'course_name' =>  new external_value(PARAM_TEXT),
                     'number_of_assignments' => new external_value(PARAM_INT),
                     'submitted_assignments' => new external_value(PARAM_INT),
+                    'noAssignments' => new external_value(PARAM_BOOL),
                     'assignments' => new external_multiple_structure(
                         new external_single_structure(
                             array(
@@ -68,20 +69,42 @@ class block_taskdisplay_external extends external_api {
     }
 
     public static function loaddata(){
-        // $data = chart_data::getChartData();
-        // $data = array();
-        $object = new stdClass;
-        $object->course_name = 'first course';
-        $object->number_of_assignments = 7;
-        $object->submitted_assignments = 5;
+        $data = chart_data::getChartData();
+        $transformedData = array();
+        foreach($data['courses'] as $key=>$course){
+            $courseObject = new stdClass;
+            $courseObject->course_name = $key;
+            $courseObject->number_of_assignments = $course['number_of_assignments'];
+            $courseObject->submitted_assignments = $course['submitted_assignments'];
+            $courseObject->noAssignments = $course['noAssignments'];
+            $assignmentArray = array();
+            foreach($course as $key_assignment=>$assignment){
+                    if($key_assignment!='number_of_assignments' && $key_assignment!='submitted_assignments' && 
+                    $key_assignment!='noAssignments'){
+                    $assignmentObject = new stdClass;
+                    $assignmentObject->assignment_name = $key_assignment;
+                    $assignmentObject->is_submitted = $assignment;
+                    $assignmentArray[] = $assignmentObject;
+                }
+            }
+            $courseObject->assignments = $assignmentArray;
+            $transformedData[] = $courseObject;
+        }
 
-        $nestedObject = new stdClass;
-        $nestedObject->assignment_name = 'first assignment';
-        $nestedObject->is_submitted = 'submitted';
-        $nestedArray[] = $nestedObject;
 
-        $object->assignments = $nestedArray;
-        $data[] = $object;
-        return $data;
+        // $object = new stdClass;
+        // $object->course_name = 'first course';
+        // $object->number_of_assignments = 7;
+        // $object->submitted_assignments = 5;
+        // $object->noAssignments = false;
+
+        // $nestedObject = new stdClass;
+        // $nestedObject->assignment_name = 'first assignment';
+        // $nestedObject->is_submitted = 'submitted';
+        // $nestedArray[] = $nestedObject;
+
+        // $object->assignments = $nestedArray;
+        // $test[] = $object;
+        return $transformedData;
     }
 }

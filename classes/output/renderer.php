@@ -59,6 +59,7 @@ class renderer extends \plugin_renderer_base{
                             <a id="vertical_bar_chart">Vertical Bar Chart</a>
                         </div>
                      </div>
+                     <div id="chartholder2"></div>
                      <div id="test"></div>';
 
 

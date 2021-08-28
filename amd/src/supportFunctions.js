@@ -7,7 +7,7 @@ import 'block_taskdisplay/x3dom';
  * Element have to be deleted.
  * @param divName The id-Name of the HTML Element which should get deleted.
  */
-function renewDiv(divName){
+export function renewDiv(divName){
     var element = document.getElementById(divName);
     var parent = element.parentNode;
     var wrapper = document.createElement('div');
@@ -60,7 +60,7 @@ export function changeChart(divName, chartType, data){
 export function initialiseChart(data){
     changeChart('chartholder', 'areaChartMultiSeries', data);
 }
-export function converJSONData(data){
+export function convertJSONData(data){
     var my_data = [];
     var keys = Object.keys(data);
     // alert(Object.keys(data).length);
@@ -83,14 +83,14 @@ export function converJSONData(data){
                         if (data[keys[i]][object]=='submitted'){
                             values.push({key: 'EA'+index, value: 100});
                         }else {
-                            values.push({key: 'EA'+index});
+                            values.push({key: 'EA'+index, value: 0});
                         }
                         index += 1;
                     }
                 }
             } else {
                 // if the values array is empty it gets default parameters.
-                values.push({key: 'EA'+index});
+                values.push({key: 'EA'+index, value: 0});
                 //TODO try to get rid of the EA statement when there are no assingments stored for the course
             }
             my_data.unshift({key: keys[i], values: values});

@@ -33,12 +33,23 @@ class observer{
      */
     public static function course_graded(\mod_assign\event\assessable_submitted $event){
         global $DB;
-        $user_id['user_id'] = $event->userid;
-        if (!$DB->record_exists('block_taskdisplay', $user_id)){
+        // $user_id['user_id'] = $event->userid;
+        // if (!$DB->record_exists('block_taskdisplay', $user_id)){
+        //     $data = new \stdClass();
+        //     $data->user_id = $event->userid;
+        //     $data->course_id = $event->courseid;
+        //     $DB->insert_record('block_taskdisplay', $data);
+        // }
+        $context = \context_course::instance($event->courseid);
+        $users = get_enrolled_users($context);
+        foreach ($users as $user){
             $data = new \stdClass();
-            $data->user_id = $event->userid;
+            $data->user_id = $user->id; 
             $data->course_id = $event->courseid;
-            $DB->insert_record('block_taskdisplay', $data);
+            $condition['user_id'] = $user->id;
+            if (!$DB->record_exists('block_taskdisplay', $condition)){
+                $DB->insert_record('block_taskdisplay', $data);
+            }
         }
     }
 }

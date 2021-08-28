@@ -75,6 +75,7 @@ class chart_data{
                     $assignment_id = $assignment->id;
                     $assignment_condition = array('userid'=>$USER->id, 'assignment'=>$assignment_id);
                     $assignment_submission = $DB->get_record('assign_submission', $assignment_condition);
+                    // TODO If there are similar assignment names it will transfer just one of them to the client browser.
                     $data['courses'][$course_name][$assignment_name] = $assignment_submission->status;
                     if ($assignment_submission->status=='submitted'){
                         $submitted_assignments +=1;
