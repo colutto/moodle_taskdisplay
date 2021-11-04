@@ -7,6 +7,7 @@ use external_api;
 use external_multiple_structure;
 use external_single_structure;
 use external_value;
+use block_taskdisplay\observer as observer;
 use block_taskdisplay\output\chart_data as chart_data;
 require_once("$CFG->libdir/externallib.php");
 
@@ -55,6 +56,7 @@ class block_taskdisplay_external extends external_api {
                     'number_of_assignments' => new external_value(PARAM_INT),
                     'submitted_assignments' => new external_value(PARAM_INT),
                     'noAssignments' => new external_value(PARAM_BOOL),
+                    'user_count' => new external_value(PARAM_INT),
                     'assignments' => new external_multiple_structure(
                         new external_single_structure(
                             array(
@@ -72,16 +74,17 @@ class block_taskdisplay_external extends external_api {
         $data = chart_data::getChartData();
         $transformedData = array();
         foreach($data['courses'] as $key=>$course){
-            $courseObject = new stdClass;
+            $courseObject = new \stdClass;
             $courseObject->course_name = $key;
             $courseObject->number_of_assignments = $course['number_of_assignments'];
             $courseObject->submitted_assignments = $course['submitted_assignments'];
             $courseObject->noAssignments = $course['noAssignments'];
+            $courseObject->user_count = observer::get_user_count();
             $assignmentArray = array();
             foreach($course as $key_assignment=>$assignment){
                     if($key_assignment!='number_of_assignments' && $key_assignment!='submitted_assignments' && 
                     $key_assignment!='noAssignments'){
-                    $assignmentObject = new stdClass;
+                    $assignmentObject = new \stdClass;
                     $assignmentObject->assignment_name = $key_assignment;
                     $assignmentObject->is_submitted = $assignment;
                     $assignmentArray[] = $assignmentObject;

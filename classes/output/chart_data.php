@@ -42,9 +42,11 @@ class chart_data{
         $this->page = $page;
 }
     public function initialiseChart(){
-        $data = self::getChartData();
+        $data = self::getChartData(); /**get the Data for the Charts from the DB for the Server Side Include */
         $this->page->requires->js_call_amd('block_taskdisplay/main', 'initialise', $data);
+        /**creates the Charts and transfers the data for the initial request of the website */
         $this->page->requires->js_call_amd('block_taskdisplay/server_events', 'connect');
+        /**activates the  */
     }
     public static function getChartData(){
         global $USER;

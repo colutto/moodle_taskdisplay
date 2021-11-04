@@ -13,6 +13,6 @@ export function connect(){
             ajaxcalls.get_chart_data();
         });
         } else {
-            document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+            document.getElementById("test").innerHTML = "Sorry, your browser does not support server-sent events...";
         }
 }

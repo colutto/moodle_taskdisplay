@@ -13,7 +13,7 @@ export function get_chart_data(){
         var my_data = convertAJAXData(data);
         supportFunct.renewDiv('chartholder');
         var chartholder = d3.select('#chartholder');
-        var mychart = d3x3d.chart.bubbleChart();
+        var mychart = d3x3d.chart.areaChartMultiSeries();
         chartholder.datum(my_data).call(mychart);
         window.x3dom.reload();
     });
@@ -39,6 +39,7 @@ export function convertAJAXData(data){
             values_assignments.push({key: 'EA'+index, value: 0});
         }
         my_data.unshift({key: course.course_name, values: values_assignments});
+        alert(course.user_count);
     }
     return my_data;
 }

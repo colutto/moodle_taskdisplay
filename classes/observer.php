@@ -25,8 +25,8 @@ namespace block_taskdisplay;
 defined('MOODLE_INTERNAL') || die();
 
 class observer{
-    public static $events = array(); // stores the event when someone got graded
-
+    // public static $events = array(); // stores the event when someone got graded
+    private static $user_count;
     /**
      * @param \mod_assign\event\submission_graded $event Includes all the information which
      * we need to assign the event to the related user.
@@ -42,6 +42,8 @@ class observer{
         // }
         $context = \context_course::instance($event->courseid);
         $users = get_enrolled_users($context);
+        self::$user_count = 34;
+
         foreach ($users as $user){
             $data = new \stdClass();
             $data->user_id = $user->id; 
@@ -51,5 +53,8 @@ class observer{
                 $DB->insert_record('block_taskdisplay', $data);
             }
         }
+    }
+    public static function get_user_count(){
+        return self::$user_count;
     }
 }
