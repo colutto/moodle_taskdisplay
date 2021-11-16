@@ -77,6 +77,6 @@ while(true){
                     flush();
         }
     }
-    sleep(7);
+    sleep(5);
 }
 

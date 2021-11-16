@@ -23,26 +23,20 @@
  */
 namespace block_taskdisplay;
 defined('MOODLE_INTERNAL') || die();
-
+/**
+ * The external class functions are getting called if database events occurre. In this case we get events
+ * for user assignment submissions and upgrades. The documentation for this class can be found in the moodle
+ * Events api (https://docs.moodle.org/dev/Events_API).
+*/
 class observer{
-    // public static $events = array(); // stores the event when someone got graded
-    private static $user_count;
     /**
      * @param \mod_assign\event\submission_graded $event Includes all the information which
      * we need to assign the event to the related user.
      */
-    public static function course_graded(\mod_assign\event\assessable_submitted $event){
+    public static function assignment_submitted(\mod_assign\event\assessable_submitted $event){
         global $DB;
-        // $user_id['user_id'] = $event->userid;
-        // if (!$DB->record_exists('block_taskdisplay', $user_id)){
-        //     $data = new \stdClass();
-        //     $data->user_id = $event->userid;
-        //     $data->course_id = $event->courseid;
-        //     $DB->insert_record('block_taskdisplay', $data);
-        // }
         $context = \context_course::instance($event->courseid);
         $users = get_enrolled_users($context);
-        self::$user_count = 34;
 
         foreach ($users as $user){
             $data = new \stdClass();
@@ -54,7 +48,19 @@ class observer{
             }
         }
     }
-    public static function get_user_count(){
-        return self::$user_count;
+    public static function course_updated(\mod_assign\event\submission_updated $event){
+        global $DB;
+        $context = \context_course::instance($event->courseid);
+        $users = get_enrolled_users($context);
+
+        foreach ($users as $user){
+            $data = new \stdClass();
+            $data->user_id = $user->id; 
+            $data->course_id = $event->courseid;
+            $condition['user_id'] = $user->id;
+            if (!$DB->record_exists('block_taskdisplay', $condition)){
+                $DB->insert_record('block_taskdisplay', $data);
+            }
+        }
     }
 }

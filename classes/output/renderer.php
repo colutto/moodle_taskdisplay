@@ -22,9 +22,6 @@
  * @author      Stefan Colutto
  */
 namespace block_taskdisplay\output;
-
-use block_taskdisplay\external;
-
 defined('MOODLE_INTERNAL') || die;
 class renderer extends \plugin_renderer_base{
 
@@ -32,21 +29,18 @@ class renderer extends \plugin_renderer_base{
         global $CFG; //Configuration Variable
         global $DB; //Database Variable
 
-//        loads the JavaScript x3dom module
+//      loads the JavaScript x3dom module
         $url_x3dom = new \moodle_url('https://x3dom.org/release/x3dom.js');
         $this->page->requires->js($url_x3dom);
 
-//        loads the cascading style sheet for the x3dom scenes.
         $url_x3dom_css = new \moodle_url('https://x3dom.org/release/x3dom.css');
         $this->page->requires->css_theme($url_x3dom_css);
 
 
-//      gets the data for the user assignment results
-        $user_data = $DB->get_records('block_taskdisplay', array('id' => 1));
 
-        // loads the JavaScript code for the client server-sent messaging system
-        $chart_data = new chart_data($this->page);
-        $chart_data->initialiseChart();
+
+        $this->page->requires->js_call_amd('block_taskdisplay/main', 'initialise');
+
 
 
         $html =     '
@@ -55,19 +49,20 @@ class renderer extends \plugin_renderer_base{
                         <button class="dropbtn" id="buttonChangeChart">Area Chart</button>
                         <div class="dropdown-content">
                             <a id="area_chart">Area Chart</a>
-                            <a id="multi_series_bar_chart">Multi Series Bar Chart</a>
-                            <a id="vertical_bar_chart">Vertical Bar Chart</a>
+                            <a id="bar_chart">Bar Chart</a>
+                            <a id="ribbon_chart">Ribbon Chart</a>
                         </div>
                      </div>
                      <div id="chartholder2"></div>
-                     <div id="test"></div>';
-
-
-
-
-
+                     <div class="dropdown">
+                        <button class="dropbtn" id="buttonChangeChart">Area Chart</button>
+                        <div class="dropdown-content">
+                            <a id="area_chart">Area Chart</a>
+                            <a id="bar_chart">Bar Chart</a>
+                            <a id="ribbon_chart">Ribbon Chart</a>
+                        </div>
+                     ';
         return $html;
-
     }
 
 }

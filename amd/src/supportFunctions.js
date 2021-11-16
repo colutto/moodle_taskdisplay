@@ -4,7 +4,7 @@ import 'block_taskdisplay/x3dom';
 
 /**
  * Renews the HTML Element when the chart is getting changed because the variables of the HTML
- * Element have to be deleted.
+ * Elements need to be renewed
  * @param divName The id-Name of the HTML Element which should get deleted.
  */
 export function renewDiv(divName){
@@ -22,9 +22,6 @@ export function renewDiv(divName){
  * @param data The data for the new chart.
  */
 export function changeChart(divName, chartType, data){
-    // if (changeChart){
-    // renewDiv(divName);
-    // }
     renewDiv(divName);
     var chartholder = d3.select('#' + divName);
     switch (chartType){
@@ -67,7 +64,6 @@ export function convertJSONData(data){
     // if(!supportFunct.isEmpty(data)){
         for (var i=0; i<keys.length; i++){
             // loops through all the user enrolled courses.
-            // alert('key: '+keys[i]);
             var values = [];
             var index = 1;
             if(!data[keys[i]]['noAssignments']){
@@ -76,8 +72,6 @@ export function convertJSONData(data){
             an empty string to function accordingly*/
                 for (var object in data[keys[i]]){
                     // loops through all the course related assignments.
-                    // alert(object+' '+data[keys[i]][object]);
-                    // if(data[keys[i]]['number_of_assignments']!=0){
                     if(object!='number_of_assignments' && object!='submitted_assignments' && object!='noAssignments'){
                         /**checks if the object is an assingment or just some additional information of the course */
                         if (data[keys[i]][object]=='submitted'){
