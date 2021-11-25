@@ -8,7 +8,6 @@ export function connect(){
         //TODO change the hostname to a dynamic hostname function.
         var source = new EventSource("http://localhost:8080/moodle/blocks/taskdisplay/server_sent.php");
         source.addEventListener('update', function(){
-            console.log('Server has sent new message');
             get_chart_data();
         });
         } else {

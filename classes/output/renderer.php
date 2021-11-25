@@ -44,24 +44,27 @@ class renderer extends \plugin_renderer_base{
 
 
         $html =     '
-                     <div id="chartholder"></div>
-                     <div class="dropdown">
-                        <button class="dropbtn" id="buttonChangeChart">Area Chart</button>
+                    <h5>Personal Assignments</h5>
+                    <div id="chartholder"></div>
+                    <div class="dropdown">
+                        <button class="dropbtn" id="buttonChartholder">Bar Chart</button>
                         <div class="dropdown-content">
-                            <a id="area_chart">Area Chart</a>
-                            <a id="bar_chart">Bar Chart</a>
-                            <a id="ribbon_chart">Ribbon Chart</a>
+                            <a id="areaChartUser">Area Chart</a>
+                            <a id="barChartUser">Bar Chart</a>
+                            <a id="ribbonChartUser">Ribbon Chart</a>
                         </div>
-                     </div>
-                     <div id="chartholder2"></div>
-                     <div class="dropdown">
-                        <button class="dropbtn" id="buttonChangeChart">Area Chart</button>
+                    </div>
+                    <hr/>
+                    <h5>Average Assignments</h5>
+                    <div id="chartholder2"></div>
+                    <div class="dropdown">
+                        <button class="dropbtn" id="buttonChartholder2">Bar Chart</button>
                         <div class="dropdown-content">
-                            <a id="area_chart">Area Chart</a>
-                            <a id="bar_chart">Bar Chart</a>
-                            <a id="ribbon_chart">Ribbon Chart</a>
+                            <a id="areaChartStudents">Area Chart</a>
+                            <a id="barChartStudents">Bar Chart</a>
+                            <a id="ribbonChartStudents">Ribbon Chart</a>
                         </div>
-                     ';
+                    ';
         return $html;
     }
 

@@ -27,7 +27,7 @@ class block_taskdisplay extends block_base {
      * Displays the title of the plugin.
      */
     public function init(){
-        $this->title = get_string('taskdisplay', 'block_taskdisplay');
+        // $this->title = get_string('taskdisplay', 'block_taskdisplay');
     }
 
     /**

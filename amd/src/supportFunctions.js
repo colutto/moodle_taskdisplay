@@ -1,7 +1,8 @@
 import * as d3 from './d3-x3d_library/d3';
 import * as d3x3d from './d3-x3d_library/d3-x3d';
 import 'block_taskdisplay/x3dom';
-
+import {userData} from './ajaxcalls';
+import {studentsData} from './ajaxcalls';
 /**
  * Renews the HTML Element when the chart is getting changed because the variables of the HTML
  * Elements need to be renewed
@@ -21,75 +22,30 @@ export function renewDiv(divName){
  * @param chartType The type of the new chart.
  * @param data The data for the new chart.
  */
-export function changeChart(divName, chartType, data){
-    renewDiv(divName);
-    var chartholder = d3.select('#' + divName);
-    switch (chartType){
+export function changeChart(chartType, chartId, buttonId, sessionName){
+    renewDiv(chartId);
+    var data;
+    if(chartId == 'chartholder'){
+        data = userData;
+    } else{
+        data = studentsData;
+    }
+    var chartholder = d3.select('#'+chartId);
+    sessionStorage.setItem(sessionName+'Chart', chartType);
+    var userChart;
+    switch(sessionStorage.getItem(sessionName+'Chart')){
         case 'areaChartMultiSeries':
-            var myChart = d3x3d.chart.areaChartMultiSeries();
+            userChart = d3x3d.chart.areaChartMultiSeries();
+            document.getElementById(buttonId).innerHTML = 'Area Chart';
             break;
-        case 'barChartVertical':
-            var myChart = d3x3d.chart.barChartVertical();
-            break;
-        case 'bubbleChart':
-            var myChart = d3x3d.chart.bubbleChart();
-            break;
-        case 'particlePlot':
-            var myChart = d3x3d.chart.particlePlot();
-            break;
-        case 'scatterPlot':
-            var myChart = d3x3d.chart.scatterPlot();
-            break;
-        case 'surfacePlot':
-            var myChart = d3x3d.chart.surfacePlot();
-            break;
-        case 'ribbonChartMultiSeries':
-            var myChart = d3x3d.chart.ribbonChartMultiSeries();
+        case 'barChartMultiSeries':
+            userChart = d3x3d.chart.barChartMultiSeries();
+            document.getElementById(buttonId).innerHTML = 'Bar Chart';
             break;
         default:
-            var myChart = d3x3d.chart.barChartMultiSeries();
-            break;
+            userChart = d3x3d.chart.ribbonChartMultiSeries();
+            document.getElementById(buttonId).innerHTML = 'Ribbon Chart';
     }
-    var myChart = d3x3d.chart.barChartVertical();
-    chartholder.datum(data).call(myChart);
+    chartholder.datum(data).call(userChart);
     window.x3dom.reload();
-}
-export function initialiseChart(data){
-    changeChart('chartholder', 'areaChartMultiSeries', data);
-}
-export function convertJSONData(data){
-    var my_data = [];
-    var keys = Object.keys(data);
-    // alert(Object.keys(data).length);
-    // if(!supportFunct.isEmpty(data)){
-        for (var i=0; i<keys.length; i++){
-            // loops through all the user enrolled courses.
-            var values = [];
-            var index = 1;
-            if(!data[keys[i]]['noAssignments']){
-            /* if there aren't any assignments at the moment it should fill in the
-            key variable for the chart with an empty string, because the chart needs at least
-            an empty string to function accordingly*/
-                for (var object in data[keys[i]]){
-                    // loops through all the course related assignments.
-                    if(object!='number_of_assignments' && object!='submitted_assignments' && object!='noAssignments'){
-                        /**checks if the object is an assingment or just some additional information of the course */
-                        if (data[keys[i]][object]=='submitted'){
-                            values.push({key: 'EA'+index, value: 100});
-                        }else {
-                            values.push({key: 'EA'+index, value: 0});
-                        }
-                        index += 1;
-                    }
-                }
-            } else {
-                // if the values array is empty it gets default parameters.
-                values.push({key: 'EA'+index, value: 0});
-                //TODO try to get rid of the EA statement when there are no assingments stored for the course
-            }
-            my_data.unshift({key: keys[i], values: values});
-            /**insert the value array with the corresponding key to the mydata array
-             * which will then be given to the chart method for visualization */
-        }
-        return my_data;
 }

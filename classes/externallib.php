@@ -59,7 +59,7 @@ class block_taskdisplay_external extends external_api {
             $courseObject = new \stdClass;
             /**the numberUsers variable describes the number of users for the calculation of the second chart */
             $context = \context_course::instance($course->id);
-            $users = get_enrolled_users($context);
+            $users = get_role_users(5, $context);
             $numberUsers = count($users);
             $courseObject->number_of_users = $numberUsers;
             /** the course name for the chart gets transferred */

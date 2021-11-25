@@ -3,6 +3,8 @@ import * as notification from 'core/notification';
 import * as d3 from './d3-x3d_library/d3';
 import * as d3x3d from './d3-x3d_library/d3-x3d';
 import * as supportFunct from './supportFunctions';
+export let userData;
+export let studentsData;
 /**
  * The function getChartData retrieves the data via AJAX from the server to the client and converts it
  * into an usable data structure for JavaScript.
@@ -14,23 +16,41 @@ export function get_chart_data(){
         fail: notification.exception,
     }]);
     connection[0].then(function(data){
-        const[userData, studentsData] = convertAJAXData(data);
+        [userData, studentsData] = convertAJAXData(data);
         supportFunct.renewDiv('chartholder');
         var chartholder = d3.select('#chartholder');
-        var mychart = d3x3d.chart.barChartMultiSeries();
-        chartholder.datum(userData).call(mychart);
+        switch(sessionStorage.getItem('userChart')){
+            case 'areaChartMultiSeries':
+                var userChart = d3x3d.chart.areaChartMultiSeries();
+                break;
+            case 'ribbonChartMultiSeries':
+                var userChart = d3x3d.chart.ribbonChartMultiSeries();
+                break;
+            default:
+                var userChart = d3x3d.chart.barChartMultiSeries();
+        }
+        chartholder.datum(userData).call(userChart);
         supportFunct.renewDiv('chartholder2');
         var chartholder = d3.select('#chartholder2');
-        var mychart = d3x3d.chart.barChartMultiSeries();
-        chartholder.datum(studentsData).call(mychart);
+        switch(sessionStorage.getItem('studentsChart')){
+            case 'areaChartMultiSeries':
+                var studentsChart = d3x3d.chart.areaChartMultiSeries();
+                break;
+            case 'ribbonChartMultiSeries':
+                var studentsChart = d3x3d.chart.ribbonChartMultiSeries();
+                break;
+            default:
+                var studentsChart = d3x3d.chart.barChartMultiSeries();
+        }
+        chartholder.datum(studentsData).call(studentsChart);
         window.x3dom.reload();
     });
 }
 /**
- * 
+ *
  * @param {*} data; The data which gets transferred in JSON structure via AJAX form the server to the client.
  * @returns userData, StudentData; The two return statements represent the two charts. The userData has stored
- * all the information about the courses and assignments from the user, whereas the studetnsData has stored all the 
+ * all the information about the courses and assignments from the user, whereas the studetnsData has stored all the
  * information about the average student submissions of every course.
  */
 export function convertAJAXData(data){
@@ -54,4 +74,10 @@ export function convertAJAXData(data){
         studentsData.unshift({key:course.course_name, values:assignmentsStudents});
     }
     return[userData, studentsData];
+}
+export function getUserData(){
+    return this.userData;
+}
+export function getStudentsData(){
+    return this.studentsData;
 }
