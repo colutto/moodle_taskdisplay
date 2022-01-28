@@ -1,13 +1,14 @@
 import * as d3 from './d3-x3d_library/d3';
 import * as d3x3d from './d3-x3d_library/d3-x3d';
 import 'block_taskdisplay/x3dom';
-
+import {userData} from './ajaxcalls';
+import {studentsData} from './ajaxcalls';
 /**
  * Renews the HTML Element when the chart is getting changed because the variables of the HTML
- * Element have to be deleted.
+ * Elements need to be renewed
  * @param divName The id-Name of the HTML Element which should get deleted.
  */
-function renewDiv(divName){
+export function renewDiv(divName){
     var element = document.getElementById(divName);
     var parent = element.parentNode;
     var wrapper = document.createElement('div');
@@ -21,43 +22,30 @@ function renewDiv(divName){
  * @param chartType The type of the new chart.
  * @param data The data for the new chart.
  */
-export function changeChart(divName, chartType, data, changeChart=false){
-    if (changeChart){
-    renewDiv(divName);
+export function changeChart(chartType, chartId, buttonId, sessionName){
+    renewDiv(chartId);
+    var data;
+    if(chartId == 'chartholder'){
+        data = userData;
+    } else{
+        data = studentsData;
     }
-    var chartholder = d3.select('#' + divName);
-    switch (chartType){
+    var chartholder = d3.select('#'+chartId);
+    sessionStorage.setItem(sessionName+'Chart', chartType);
+    var userChart;
+    switch(sessionStorage.getItem(sessionName+'Chart')){
         case 'areaChartMultiSeries':
-            var myChart = d3x3d.chart.areaChartMultiSeries();
+            userChart = d3x3d.chart.areaChartMultiSeries();
+            document.getElementById(buttonId).innerHTML = 'Area Chart';
             break;
-        case 'barChartVertical':
-            var myChart = d3x3d.chart.barChartVertical();
-            break;
-        case 'bubbleChart':
-            var myChart = d3x3d.chart.bubbleChart();
-            break;
-        case 'particlePlot':
-            var myChart = d3x3d.chart.particlePlot();
-            break;
-        case 'scatterPlot':
-            var myChart = d3x3d.chart.scatterPlot();
-            break;
-        case 'surfacePlot':
-            var myChart = d3x3d.chart.surfacePlot();
-            break;
-        case 'ribbonChartMultiSeries':
-            var myChart = d3x3d.chart.ribbonChartMultiSeries();
+        case 'barChartMultiSeries':
+            userChart = d3x3d.chart.barChartMultiSeries();
+            document.getElementById(buttonId).innerHTML = 'Bar Chart';
             break;
         default:
-            var myChart = d3x3d.chart.barChartMultiSeries();
-            break;
+            userChart = d3x3d.chart.ribbonChartMultiSeries();
+            document.getElementById(buttonId).innerHTML = 'Ribbon Chart';
     }
-    var myChart = d3x3d.chart.barChartVertical();
-    chartholder.datum(data).call(myChart);
+    chartholder.datum(data).call(userChart);
     window.x3dom.reload();
 }
-export function initialiseChart(data){
-    changeChart('charholder', 'areaChartMultiSeries', data);
-}
-
-

@@ -9,7 +9,7 @@ $services = array(
                                                       //into the administration
         'enabled'=>1,                               //if enabled, the service can be reachable on a default installation
         'shortname'=>'block_taskdisplay_service' //the short name used to refer to this service from elsewhere including when fetching a token
-     )
+    )
 );
 
 $functions = array(

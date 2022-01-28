@@ -1,14 +1,16 @@
+import { get_chart_data } from './ajaxcalls';
 /**
- * Function to establish the connection for the Server-Side Events between the Server and the Client.
+ * Function to establish the connection for all data transfers between the server and the client via AJAX.
  */
-export function connect(    ){
+export function connect(){
     if(typeof(EventSource) !== "undefined") {
-        //checks if the Server support Server-Side Events
+        // checks if the Server support Server-Side Events
+        //TODO change the hostname to a dynamic hostname function.
         var source = new EventSource("http://localhost:8080/moodle/blocks/taskdisplay/server_sent.php");
-        source.onmessage = function(event) {
-            document.getElementById("result").innerHTML += event.data + "<br>";
-        };
-    } else {
-        document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
-    }
+        source.addEventListener('update', function(){
+            get_chart_data();
+        });
+        } else {
+            document.getElementById("test").innerHTML = "Sorry, your browser does not support server-sent events...";
+        }
 }

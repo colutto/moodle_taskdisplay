@@ -29,17 +29,54 @@ require_once(__DIR__.'/../../config.php');
  * has changed.
  */
 use block_taskdisplay\observer as observer;
+
+session_start();
+session_write_close();
+
+ignore_user_abort(true);
+
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
+header("Access-Control-Allow-Origin: *");
+
+// Is this a new stream or an existing one?
+$lastEventId = floatval(isset($_SERVER["HTTP_LAST_EVENT_ID"]) ? $_SERVER["HTTP_LAST_EVENT_ID"] : 0);
+if ($lastEventId == 0) {
+    $lastEventId = floatval(isset($_GET["lastEventId"]) ? $_GET["lastEventId"] : 0);
+}
+
+echo ":" . str_repeat(" ", 2048) . "\n"; // 2 kB padding for IE
+echo "retry: 2000\n";
+
+
 global $USER;
 global $DB;
 while(true){
-    $conditions = array();
-    $conditions->user_id = [$USER->id];
-    $occurences = $DB->count_records('block_taskdisplay', $conditions);
-    if($occurences != 0){
-        echo "data: event occured\n\n";
-        $DB->delete_records('block_taskdisplay', $conditions);
+    if(connection_aborted()){
+        exit();
+    } else {
+        $latestEventId = $lastEventId+1;
+        if($lastEventId < $latestEventId){
+            $lastEventId = $latestEventId;
+
+            $conditions = array();
+            $conditions['user_id'] = $USER->id;
+            $occurences = $DB->count_records('block_taskdisplay', $conditions);
+            if($occurences != 0){
+                echo "event: update\n";
+                echo "data: \n\n";
+                $DB->delete_records('block_taskdisplay', $conditions);
+            } else {
+                echo "data: no occurences".$occurences."\n\n";
+            }
+            ob_flush();
+            flush();
+        } else {
+            echo ": heartbeat\n\n";
+                    ob_flush();
+                    flush();
+        }
     }
+    sleep(5);
 }
 

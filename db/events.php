@@ -26,6 +26,10 @@ defined('MOODLE_INTERNAL') || die();
 $observers = array(
     array(
         'eventname' => '\mod_assign\event\assessable_submitted',
-        'callback' => '\block_taskdisplay\observer::course_graded',
+        'callback' => '\block_taskdisplay\observer::assignment_submitted',
+    ),
+    array(
+        'eventname' => '\mod_assign\event\submission_updated',
+        'callback' => '\block_taskdisplay\observer::course_updated'
     ),
 );

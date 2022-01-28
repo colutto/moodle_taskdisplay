@@ -22,53 +22,50 @@
  * @author      Stefan Colutto
  */
 namespace block_taskdisplay\output;
-
-use block_taskdisplay\external;
-
 defined('MOODLE_INTERNAL') || die;
 class renderer extends \plugin_renderer_base{
 
-public function render_taskdisplay(){
+    public function render_taskdisplay(){
         global $CFG; //Configuration Variable
         global $DB; //Database Variable
 
-//        loads the JavaScript x3dom module
+//      loads the JavaScript x3dom module
         $url_x3dom = new \moodle_url('https://x3dom.org/release/x3dom.js');
         $this->page->requires->js($url_x3dom);
 
-//        loads the cascading style sheet for the x3dom scenes.
         $url_x3dom_css = new \moodle_url('https://x3dom.org/release/x3dom.css');
         $this->page->requires->css_theme($url_x3dom_css);
 
 
-//      gets the data for the user assignment results
-        $user_data = $DB->get_records('block_taskdisplay', array('id' => 1));
 
-        // loads the JavaScript code for the client server-sent messaging system
-//        $this->page->requires->js_call_amd('block_taskdisplay/server_events', 'connect');
-        $this->page->requires->js_call_amd('block_taskdisplay/runtime_node', 'initialise_runtimNode');
-        $chart_data = new chart_data($this->page);
-        $chart_data->initialiseChart();
+
+        $this->page->requires->js_call_amd('block_taskdisplay/main', 'initialise');
+
 
 
         $html =     '
-                <div id="chartholder"></div>
-                <div class="dropdown">
-                        <button class="dropbtn" id="buttonChangeChart">Area Chart</button>
+                    <h5>Personal Assignments</h5>
+                    <div id="chartholder"></div>
+                    <div class="dropdown">
+                        <button class="dropbtn" id="buttonChartholder">Bar Chart</button>
                         <div class="dropdown-content">
-                        <a id="area_chart">Area Chart</a>
-                        <a id="multi_series_bar_chart">Multi Series Bar Chart</a>
-                        <a id="vertical_bar_chart">Vertical Bar Chart</a>
+                            <a id="areaChartUser">Area Chart</a>
+                            <a id="barChartUser">Bar Chart</a>
+                            <a id="ribbonChartUser">Ribbon Chart</a>
                         </div>
-                </div>
-                <button id="asynchronousRequest">Runtime Node</button>';
-
-
-
-
-
+                    </div>
+                    <hr/>
+                    <h5>Average Assignments</h5>
+                    <div id="chartholder2"></div>
+                    <div class="dropdown">
+                        <button class="dropbtn" id="buttonChartholder2">Bar Chart</button>
+                        <div class="dropdown-content">
+                            <a id="areaChartStudents">Area Chart</a>
+                            <a id="barChartStudents">Bar Chart</a>
+                            <a id="ribbonChartStudents">Ribbon Chart</a>
+                        </div>
+                    ';
         return $html;
-
-}
+    }
 
 }
