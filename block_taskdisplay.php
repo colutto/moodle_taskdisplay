@@ -27,7 +27,7 @@ class block_taskdisplay extends block_base {
      * Displays the title of the plugin.
      */
     public function init(){
-        // $this->title = get_string('taskdisplay', 'block_taskdisplay');
+        $this->title = get_string('taskdisplay', 'block_taskdisplay');
     }
 
     /**
@@ -50,25 +50,25 @@ class block_taskdisplay extends block_base {
     }
 
     public function specialization() {
-        if (isset($this->config)) {
-            if (empty($this->config->title)) {
-                $this->title = get_string('defaulttitle', 'block_taskdisplay');
-            } else {
-                $this->title = $this->config->title;
-            }
+        // if (isset($this->config)) {
+        //     if (empty($this->config->title)) {
+        //         $this->title = get_string('defaulttitle', 'block_taskdisplay');
+        //     } else {
+        //         $this->title = $this->config->title;
+        //     }
 
-            if (empty($this->config->text)) {
-                $this->config->text = get_string('defaulttext', 'block_taskdisplay');
-            }
-        }
+        //     if (empty($this->config->text)) {
+        //         $this->config->text = get_string('defaulttext', 'block_taskdisplay');
+        //     }
+        // }
     }
 
     /**
      * This method enables global configuration for the plugin.
      * @return bool to determine if the plugin has a settings.php file.
      */
-    function has_config(){
-        return true;
-    }
+    // function has_config(){
+    //     return true;
+    // }
 
 }

@@ -55,3 +55,6 @@ X3D, x3d {
     width: 100% !important;
     height: 100% !important;
 }
+.block_taskdisplay #id_submit{
+    color:#116ccb;
+}
