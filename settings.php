@@ -22,15 +22,15 @@
  * @author      Stefan Colutto
  */
 
-$settings->add(new admin_setting_heading(
-    'headerconfig',
-    get_string('headerconfig', 'block_taskdisplay'),
-    get_string('descconfig', 'block_taskdisplay')
-));
+// $settings->add(new admin_setting_heading(
+//     'headerconfig',
+//     get_string('headerconfig', 'block_taskdisplay'),
+//     get_string('descconfig', 'block_taskdisplay')
+// ));
 
-$settings->add(new admin_setting_configcheckbox(
-    'simplehtml/Allow_HTML',
-    get_string('labelallowhtml', 'block_taskdisplay'),
-    get_string('descallowhtml', 'block_taskdisplay'),
-    '0'
-));
+// $settings->add(new admin_setting_configcheckbox(
+//     'simplehtml/Allow_HTML',
+//     get_string('labelallowhtml', 'block_taskdisplay'),
+//     get_string('descallowhtml', 'block_taskdisplay'),
+//     '0'
+// ));

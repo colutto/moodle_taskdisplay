@@ -25,18 +25,14 @@
 class block_taskdisplay_edit_form extends block_edit_form {
 
     protected function specific_definition($mform) {
-
+        global $COURSE;
         // Section header title according to language file.
-        $mform->addElement('header', 'config_header', get_string('blocksettings', 'block'));
+        $mform->addElement('header', 'config_header', get_string('blocksettings', 'block_taskdisplay'));
+        // $mform->addElement('submit', 'submit', get_string('addbutton', 'block_taskdisplay'));
+        // $mform->addElement('button', 'intro', get_string('deletebutton', 'block_taskdisplay'));
 
-        // A sample string variable with a default value.
-        $mform->addElement('text', 'config_text', get_string('blockstring', 'block_taskdisplay'));
-        $mform->setDefault('config_text', 'default value');
-        $mform->setType('config_text', PARAM_RAW);
-
-        $mform->addElement('text', 'config_title', get_string('blocktitle', 'block_taskdisplay'));
-        $mform->setDefault('config_title', 'default value');
-        $mform->setType('config_title', PARAM_TEXT);
+        $options = array('multiple' => true, 'includefrontpage' => true);                                                           
+        $mform->addElement('course', 'mappedcourses', get_string('chooseCourse', 'block_taskdisplay'), $options);         
 
     }
 }
